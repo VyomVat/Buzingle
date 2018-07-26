@@ -8,6 +8,7 @@
         Arcken DevTeam
     </author>
     <content src="index.html" />
+    <icon src="monkey.gif" platform="android" width="30" height="36" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
     <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1" />
