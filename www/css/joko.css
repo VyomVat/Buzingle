@@ -1,18 +1,47 @@
+
+.wrapper {
+  height:100vh;
+  display:flex;
+  flex-direction: column;
+}
+
+
+body {margin:0}
+
+#header {
+	background-color:red;
+	height:70px
+}
+#actionBar {
+	background-color:lightgray;
+	height:40px
+}
+#viewPort {
+	background-color:black;
+	flex:1;
+	position: relative;
+}
+#footer {
+	background-color:red;
+	color:white;
+	height:30px;
+	font-size:smaller;
+}
 #jokoFrame {
 	pointer-events: none;
+	height: 100%;
+    width: 100%;
+	position: absolute;
 }
 
 #myCanvas {
 	cursor: crosshair;
-	position: fixed;
 	opacity: 0.5;
-	width: 525px;
-	height: 300px;
+	position: absolute;
+	height: 100%;
+    width: 100%;
 }
 
-#frameDiv {
-	position: fixed;
-}
 
 .container {
 	width: 100%;
@@ -41,6 +70,9 @@ ul.tabs li.current {
 	display: none;
 	background: #999999;
 	padding: 10px;
+	position:fixed;
+	z-index:10;
+	width:100%;
 }
 
 .tab-content.current {
