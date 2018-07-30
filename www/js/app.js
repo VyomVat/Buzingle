@@ -44,5 +44,38 @@
         });
     }
 
+    $('ul.tabs li').mousemove(function () {
+        var tab_id = $(this).attr('data-tab');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $(this).addClass('current');
+        $("#" + tab_id).addClass('current');
+    });
+
+    $('div.tab-content').mouseleave(function () {
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+    });
+
+
+    $('ul.tabs li').removeClass('current');
+    $('.tab-content').removeClass('current');
+
+
+    //Build Tabs from configured values
+    $.getJSON("config.json", function (result) {
+        $.each(result.pics, function (i, field) {
+            //alert(i);
+            $("#picList").append("<div class='pickDiv' onclick='setMode(2,&quot;" + field.main + "&quot;)'><img class='pickDiv' id='" + field.id + "' src='img/" + field.thumb + "'/></div>");
+        });
+        $.each(result.sprites, function (i, field) {
+            $("#spriteList").append("<div class='pickDiv' onclick='setMode(3,&quot;" + field.main + "&quot;," + field.jw + "," + field.jh + "," + field.jc + ")'><img class='pickDiv' id='" + field.id + "' src='img/" + field.thumb + "'/></div>");
+        });
+        $.each(result.sounds, function (i, field) {
+            $("#soundList").append("<div class='pickDiv' style='background:yellow' onclick='setMode(4,&quot;" + field.main + "&quot;)'>" + field.name + "</div>");
+        });
+    });
 
 })();
