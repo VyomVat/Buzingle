@@ -1,101 +1,149 @@
-
-</html>
-
-
-
-
-<!DOCTYPE html>
-
-<html lang="en-US">
+﻿<!DOCTYPE html>
+<html>
 <head>
-    <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"> -->
     
-    <link href="CSS/joko.css" rel="stylesheet" />
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Your app title -->
+    <title>Buzingle</title
+
+
+    <!-- This template defaults to the iOS CSS theme. To support both iOS and material design themes, see the Framework7 Tutorial at the link below:
+        http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
+     -->
+
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+
     <script type="text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js?ver=1.4.2"></script>
     <script type="text/JavaScript" src="//cdn.pubnub.com/pubnub.min.js"></script>
     <script type="text/JavaScript" src="js/raf.js"></script>
     <script type="text/JavaScript" src="js/joko.js"></script>
     <script type="text/JavaScript" src="https://www.youtube.com/iframe_api"></script>
+
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/joko.css">
 </head>
+
 <body>
-    <div class="wrapper">
-        <div id="header">            
-            <img src="img/bZZ-LOGO.png" />
+    <!-- Status bar overlay for full screen mode (PhoneGap) -->
+    <div class="statusbar-overlay"></div>
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal">
+        <div class="content-block">
+            <p>BuzzBar</p>
+            <ul class="tabs">
+                <li class="tab-link current" data-tab="tab-1" onclick="setMode(1);"><img src="img/Pencil-icon.png" style="width:20px; height:20px" alt="Scribble something"></li>
+                <li class="tab-link" data-tab="tab-2" onclick="setMode(2,picJoket);"><img src="img/stamp-icon.jpg" style="width:20px; height:20px" alt="Stamp an image"></li>
+                <li class="tab-link" data-tab="tab-3" onclick="setMode(3,spriteJoket,JW,JH,JCNT);"><img src="img/animate-icon.jpg" style="width:20px; height:20px" alt="Animate a sprite"></li>
+                <li class="tab-link" data-tab="tab-4" onclick="setMode(4,soundJocket);"><img src="img/sound-icon.png" style="width:20px; height:20px" alt="Make a sound"></li>
+                <li class="tab-link" data-tab="tab-5" onclick="setMode(5);"><img src="img/chat-icon.jpg" style="width:20px; height:20px" alt="Comment"></li>
+                <li class="" style="" onclick="clearJoko()"><img src="img/clear-icon.png" style="width:20px; height:20px" alt="Clear"></li>
+            </ul>
+            <div id="tab-1" class="tab-content current">
+                <div id='content' style="display:table;">
+                    <div id='div-0' class="" style="">Pick a color&nbsp;</div>
+                    <div id='div-1' class="pickDiv" style="background:red;" onclick="setMode(1,'#FF0000')"></div>
+                    <div id='div-2' class="pickDiv" style="background:blue;" onclick="setMode(1,'#0000CC')"></div>
+                    <div id='div-3' class="pickDiv" style="background:green;" onclick="setMode(1,'#33CC33')"></div>
+                    <div id='div-4' class="pickDiv" style="background:black;" onclick="setMode(1,'#000000')"></div>
+                    <div id='div-5' class="pickDiv" style="background:white;" onclick="setMode(1,'#FFFFFF')"></div>
+                </div>
+            </div>
+            <div id="tab-2" class="tab-content">
+                <div id='picList' style="display:table;">
+                </div>
+            </div>
+            <div id="tab-3" class="tab-content">
+                <div id='spriteList' style="display:table;">
+                </div>
+            </div>
+            <div id="tab-4" class="tab-content">
+                <div id='soundList' style="display:table;">
+                </div>
+            </div>
+            <div id="tab-5" class="tab-content">
+                <input type="text" id="txtComment" placeholder="Enter your comment" style="width:100%" />
+            </div>
         </div>
-        <div id="actionBar">
-            <div class="container">
-                <ul class="tabs">
-                    <li class="tab-link current" data-tab="tab-1" onclick="setMode(1);"><img src="img/Pencil-icon.png" style="width:20px; height:20px" alt="Scribble something"></li>
-                    <li class="tab-link" data-tab="tab-2" onclick="setMode(2,picJoket);"><img src="img/stamp-icon.jpg" style="width:20px; height:20px" alt="Stamp an image"></li>
-                    <li class="tab-link" data-tab="tab-3" onclick="setMode(3,spriteJoket,JW,JH,JCNT);"><img src="img/animate-icon.jpg" style="width:20px; height:20px" alt="Animate a sprite"></li>
-                    <li class="tab-link" data-tab="tab-4" onclick="setMode(4,soundJocket);"><img src="img/sound-icon.png" style="width:20px; height:20px" alt="Make a sound"></li>
-                    <li class="tab-link" data-tab="tab-5" onclick="setMode(5);"><img src="img/chat-icon.jpg" style="width:20px; height:20px" alt="Comment"></li>
-                     				<li class="tab-link" data-tab="tab-6">Source</li> 
-                    <li class="" style="" onclick="clearJoko()"><img src="img/clear-icon.png" style="width:20px; height:20px" alt="Clear"></li>
-                    <li class="tab-link" data-tab="tab-6">
-                        <input type="button" id="btnPlay1" value="Load" onclick="LoadVideo()" />
-                    </li>
-                    <li class="" style="" onclick="">
+    </div>
+
+    <!-- Views -->
+    <div class="views">
+        <!-- Your main view, should have "view-main" class -->
+        <div class="view view-main">
+            <!-- Top Navbar-->
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+                    <div class="center sliding">
                         <input type="button" id="btnPlay2" value="play" onclick="startVideo()" />
                         <input type="button" id="btnPlay3" value=" || " onclick="pauseVideo()" />
                         <input type="button" id="btnPlay4" value="stop" onclick="stopVideo()" />
-                        <input type="button" id="btnPlay5" value="<<" onclick="rewindVideo()" />
+                        <!-- <input type="button" id="btnPlay5" value="<<" onclick="rewindVideo()" />
                         <input type="button" id="btnPlay6" value=">>" onclick="forwardVideo()" />
-                        <input type="button" id="btnPlay1" value="Record" onclick="RecordVideo()" />
-                    </li>
-                    <li class="" style="" onclick="">
-                        <input type="button" id="btnShow1" value="Start Show" onclick="startVideo()" />
-                        <input type="button" id="btnShow2" value="Audience" onclick="pauseVideo()" />
-                        <input type="button" id="btnShow3" value="Invite" onclick="stopVideo()" />
-                        <input type="button" id="btnPlay4" value="Exit Show" onclick="rewindVideo()" />
-                        <input type="button" id="btnPlay4" value="Login/Register" onclick="login()" />
-                    </li>
-                </ul>
-                <div id="tab-1" class="tab-content current">
-                    <div id='content' style="display:table;">
-                        <div id='div-0' class="" style="">Pick a color&nbsp;</div>
-                        <div id='div-1' class="pickDiv" style="background:red;" onclick="setMode(1,'#FF0000')"></div>
-                        <div id='div-2' class="pickDiv" style="background:blue;" onclick="setMode(1,'#0000CC')"></div>
-                        <div id='div-3' class="pickDiv" style="background:green;" onclick="setMode(1,'#33CC33')"></div>
-                        <div id='div-4' class="pickDiv" style="background:black;" onclick="setMode(1,'#000000')"></div>
-                        <div id='div-5' class="pickDiv" style="background:white;" onclick="setMode(1,'#FFFFFF')"></div>
+                        <input type="button" id="btnPlay1" value="Record" onclick="RecordVideo()" /> -->
                     </div>
-                </div>
-                <div id="tab-2" class="tab-content">
-                    <div id='picList' style="display:table;">
+                    <div class="right">
+                        <!--
+                          Right link contains only icon - additional "icon-only" class
+                          Additional "open-panel" class tells app to open panel when we click on this link
+                        -->
+                        <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
                     </div>
-                </div>
-                <div id="tab-3" class="tab-content">
-                    <div id='spriteList' style="display:table;">
-                    </div>
-                </div>
-                <div id="tab-4" class="tab-content">
-                    <div id='soundList' style="display:table;">
-                    </div>
-                </div>
-                <div id="tab-5" class="tab-content">
-                    <input type="text" id="txtComment" placeholder="Enter your comment" style="width:100%" />
-                </div>
-                <div id="tab-6" class="tab-content">
-                    <input type="text" id="txtURL" style="width:90%" placeholder="Enter You tube Video URL" />
-                    <input type="button" id="btnURL" value="Load" onclick="loadURL();" />
                 </div>
             </div>
-        </div>
-        <div id="viewPort">
-            <iframe id="jokoFrame" showinfo=0 rel=0 controls=0 type="text/html"
-                    src="https://www.youtube.com/embed/48lDzD6JNJc?enablejsapi=1" frameborder="0"></iframe>
-            <!-- 			<iframe id="jokoFrame" showinfo=0 rel=0 controls=0 type="text/html"
-                    src="https://www.filmon.com/tv/channel/export?channel_id=27&affid=39703Jc&enablejsapi=1" frameborder="0">
-            </iframe>
-             -->
-
-            <canvas id="myCanvas" ondblclick="clearJoko()"></canvas>
-        </div>
-        <div id="footer">
-            Copyrights Arcken LLC (2015-2025)
+            <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+            <div class="pages navbar-through toolbar-through">
+                <!-- Page, "data-page" contains page name -->
+                <div data-page="index" class="page">
+                    <!-- Scrollable page content -->
+                    <div class="page-content">
+                        <div class="content-block" style="height:85%; margin:0; padding: 0"> 
+                            <iframe id="jokoFrame" showinfo=0 rel=0 controls=0 type="text/html"
+                                style="overflow: hidden; height: 85%;   width: 100%; position: absolute;"
+                                src="https://www.youtube.com/embed/48lDzD6JNJc?enablejsapi=1" frameborder="0">
+                            </iframe>            
+                            <canvas id="myCanvas" style="height:85%" ondblclick="clearJoko()"></canvas>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Toolbar-->
+            <!--<div class="toolbar">
+                <div class="toolbar-inner">
+                    <!-- Toolbar links -->
+                    <!--
+                    <a href="#" class="link">Link 1</a>
+                    <a href="#" class="link">Link 2</a>-->
+               <!-- </div>
+            </div>-->
         </div>
     </div>
-</body>
-</html>
 
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+</body>
+
+</html>
