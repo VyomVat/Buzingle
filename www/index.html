@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <!--
@@ -21,7 +21,8 @@
     <meta name="msapplication-tap-highlight" content="no">
 
     <!-- Your app title -->
-    <title>Buzingle</title>
+    <title>Buzingle</title
+
 
     <!-- This template defaults to the iOS CSS theme. To support both iOS and material design themes, see the Framework7 Tutorial at the link below:
         http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
@@ -29,6 +30,13 @@
 
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+
+    <script type="text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js?ver=1.4.2"></script>
+    <script type="text/JavaScript" src="//cdn.pubnub.com/pubnub.min.js"></script>
+    <script type="text/JavaScript" src="js/raf.js"></script>
+    <script type="text/JavaScript" src="js/joko.js"></script>
+    <script type="text/JavaScript" src="https://www.youtube.com/iframe_api"></script>
+
 
     <link rel="stylesheet" href="css/styles.css">
    
@@ -43,7 +51,7 @@
     <!-- Left panel with reveal effect-->
     <div class="panel panel-left panel-reveal">
         <div class="content-block">
-            <p></p>
+            <p>Presence & History</p>
         </div>
     </div>
 
@@ -55,7 +63,14 @@
             <div class="navbar">
                 <div class="navbar-inner">
                     <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-                    <div class="center sliding"></div>
+                    <div class="center sliding">
+                        <input type="button" id="btnPlay2" value="play" onclick="startVideo()" />
+                        <input type="button" id="btnPlay3" value=" || " onclick="pauseVideo()" />
+                        <input type="button" id="btnPlay4" value="stop" onclick="stopVideo()" />
+                        <input type="button" id="btnPlay5" value="<<" onclick="rewindVideo()" />
+                        <input type="button" id="btnPlay6" value=">>" onclick="forwardVideo()" />
+                        <input type="button" id="btnPlay1" value="Record" onclick="RecordVideo()" />
+                    </div>
                     <div class="right">
                         <!--
                           Right link contains only icon - additional "icon-only" class
