@@ -265,6 +265,7 @@ window.onload = function() {
 	};
 
 	// Touch Events
+	/*
 	myCanvas.addEventListener('touchstart', draw.start, false);
 	myCanvas.addEventListener('touchend', draw.end, false);
 	myCanvas.addEventListener('touchmove', draw.move, false);
@@ -273,6 +274,30 @@ window.onload = function() {
 	document.body.addEventListener('touchmove', function(evt) {
 		evt.preventDefault();
 	}, false);
+	*/
+	
+	//-----------------------------------------------------------------
+	 var mouseEventTypes = {
+    		touchstart : "mousedown",
+    		touchmove : "mousemove",
+    		touchend : "mouseup"
+    	 };
+	for (originalType in mouseEventTypes) {
+        	document.addEventListener(originalType, function(originalEvent) {
+		    if(originalEvent.type == 'click')
+			return;
+		    if (originalEvent.type != 'touchstart' && originalEvent.type !='touchend'){
+			originalEvent.preventDefault();
+		    }
+		    event = document.createEvent("MouseEvents");
+		    touch = originalEvent.changedTouches[0];
+		    event.initMouseEvent(mouseEventTypes[originalEvent.type], true, true, window, 0, touch.screenX, touch.screenY, touch.clientX, touch.clientY, touch.ctrlKey, touch.altKey, touch.shiftKey, touch.metaKey, 0, null);
+		    originalEvent.target.dispatchEvent(event);
+		    event.preventDefault();         
+		});
+    	}	
+	//-----------------------------------------------------------------
+	
 };
 
 
