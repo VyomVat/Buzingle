@@ -398,6 +398,7 @@ function clearJoko() {
 //Set current joket drawing
 function setMode(val, p, w, h, c) {
 	if (animID !== 0) {
+		
 		cancelAnimationFrame(animID);
 	}
 	mode = val;
