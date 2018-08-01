@@ -176,6 +176,9 @@ window.onload = function() {
 
 				var spriteObj = new Image();
 				spriteObj.onload = function() {
+					if (animID !== 0) {
+						cancelAnimationFrame(animID);
+					}	
 					animID = requestAnimationFrame(function(timestamp) {
 						drawSprite(ctx, spriteObj, canvasX, canvasY, JW, JH, JCNT);
 					});
@@ -397,13 +400,10 @@ function clearJoko() {
 
 //Set current joket drawing
 function setMode(val, p, w, h, c) {
-	/*if (animID !== 0) {
+	if (animID !== 0) {
 		cancelAnimationFrame(animID);
-	}*/
-	var iAnim;
-	for (iAnim = 0; iAnim < 20; iAnim++) { 
-    		cancelAnimationFrame(animID);;
 	}
+	
 	mode = val;
 	if (p === null) {} else {
 		if (mode === 1) pencolor = p;
