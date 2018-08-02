@@ -268,7 +268,7 @@ window.onload = function() {
 	};
 
 	// Touch Events
-	/*
+	
 	myCanvas.addEventListener('touchstart', draw.start, false);
 	myCanvas.addEventListener('touchend', draw.end, false);
 	myCanvas.addEventListener('touchmove', draw.move, false);
@@ -277,8 +277,9 @@ window.onload = function() {
 	document.body.addEventListener('touchmove', function(evt) {
 		evt.preventDefault();
 	}, false);
-	*/
 	
+	
+	/*
 	//-----------------------------------------------------------------
 	 var mouseEventTypes = {
     		touchstart : "mousedown",
@@ -300,7 +301,7 @@ window.onload = function() {
 		});
     	}	
 	//-----------------------------------------------------------------
-	
+	*/
 };
 
 
