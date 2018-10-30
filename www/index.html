@@ -1,150 +1,485 @@
-﻿<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"> -->
-    
-    <!-- Required meta tags-->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <!-- Your app title -->
-    <title>Buzingle</title
-
-
-    <!-- This template defaults to the iOS CSS theme. To support both iOS and material design themes, see the Framework7 Tutorial at the link below:
-        http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
-     -->
-
-    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
-    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
-
-    <script type="text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js?ver=1.4.2"></script>
-    <script type="text/JavaScript" src="//cdn.pubnub.com/pubnub.min.js"></script>
-    <script type="text/JavaScript" src="https://www.youtube.com/iframe_api"></script>
-
-
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/joko.css">
+	<title>oKtavity</title>
+	<meta name="description" content="Octivity Messanger Interface">
+	<meta name="author" content="Pravin Dalvi">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='http://fonts.googleapis.com/css?family=Gorditas:700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <!-- Status bar overlay for full screen mode (PhoneGap) -->
-    <div class="statusbar-overlay"></div>
+	<header>
+    <h1>
+      <a href="#"> <img src="logo.PNG" width="40" height="40"/></a>
+      oKtavity
+      <span id="presence" style="color:red; font-size:0.5em">0</span>
+    </h1>
+	</header>
 
-    <!-- Panels overlay-->
-    <div class="panel-overlay"></div>
-    <!-- Left panel with reveal effect-->
-    <div class="panel panel-left panel-reveal">
-        <div class="content-block" style="width:100%">
-            <p>BuzzBar</p>
-            <ul class="tabs">
-                <li class="tab-link current" data-tab="tab-1" onclick="setMode(1);"><img src="img/Pencil-icon.png" style="width:20px; height:20px" alt="Scribble something"></li>
-                <li class="tab-link" data-tab="tab-2" onclick="setMode(2,picJoket);"><img src="img/stamp-icon.jpg" style="width:20px; height:20px" alt="Stamp an image"></li>
-                <li class="tab-link" data-tab="tab-3" onclick="setMode(3,spriteJoket,JW,JH,JCNT);"><img src="img/animate-icon.jpg" style="width:20px; height:20px" alt="Animate a sprite"></li>
-                <li class="tab-link" data-tab="tab-4" onclick="setMode(4,soundJocket);"><img src="img/sound-icon.png" style="width:20px; height:20px" alt="Make a sound"></li>
-                <li class="tab-link" data-tab="tab-5" onclick="setMode(5);"><img src="img/chat-icon.jpg" style="width:20px; height:20px" alt="Comment"></li>
-                <li class="" style="" onclick="clearJoko()"><img src="img/clear-icon.png" style="width:20px; height:20px" alt="Clear"></li>
-            </ul>
-            <div id="tab-1" class="tab-content current" style="width:100%">
-                <div id='content' style="display:table;">                    
-                    <div id='div-1' class="pickDiv" style="background:red;" onclick="setMode(1,'#FF0000')"></div>
-                    <div id='div-2' class="pickDiv" style="background:blue;" onclick="setMode(1,'#0000CC')"></div>
-                    <div id='div-3' class="pickDiv" style="background:green;" onclick="setMode(1,'#33CC33')"></div>
-                    <div id='div-4' class="pickDiv" style="background:black;" onclick="setMode(1,'#000000')"></div>
-                    <div id='div-5' class="pickDiv" style="background:white;" onclick="setMode(1,'#FFFFFF')"></div>
-                </div>
-            </div>
-            <div id="tab-2" class="tab-content"  style="width:100%">
-                <div id='picList' style="display:table;">
-                </div>
-            </div>
-            <div id="tab-3" class="tab-content"  style="width:100%">
-                <div id='spriteList' style="display:table;">
-                </div>
-            </div>
-            <div id="tab-4" class="tab-content"  style="width:100%">
-                <div id='soundList' style="display:table;">
-                </div>
-            </div>
-            <div id="tab-5" class="tab-content"  style="width:100%">
-                <input type="text" id="txtComment" placeholder="Enter your comment" style="width:200px" />
-            </div>
+	<section id="main" role="main">
+		<div id="chat">
+	    
+      <i id="avatar" class="face12" style="display:none"></i>  
+      
+      <div class="dropdown"  style="display:inline-block;vertical-align:top;" >
+        <a href="#" id="mtLogin" style="display:inline-block;vertical-align:sub;" onclick="openLoginForm()">
+          <img src="media/login.png" style="width:30px; height:30px" alt="Log">
+        </a> 
+        <a href="#" id="mtMenu" style="display:none;vertical-align:sub;" onclick="myFunction()">
+          <img src="media/menu-3.png" style="width:30px; height:30px" alt="Play">
+        </a>
+        <div id="myDropdown" style="position: absolute;
+                                    background-color: lightblue;
+                                    left:0px;top:35px;
+                                    overflow:auto;
+                                    min-width: 160px;width: 280px;
+                                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);z-index: 1;">
         </div>
-    </div>
-
-    <!-- Views -->
-    <div class="views">
-        <!-- Your main view, should have "view-main" class -->
-        <div class="view view-main">
-            <!-- Top Navbar-->
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-                    <div class="center sliding">
-                        <input type="button" id="btnPlay2" value="play" onclick="startVideo()" />
-                        <input type="button" id="btnPlay3" value=" || " onclick="pauseVideo()" />
-                        <input type="button" id="btnPlay4" value="stop" onclick="stopVideo()" />
-                        <!-- <input type="button" id="btnPlay5" value="<<" onclick="rewindVideo()" />
-                        <input type="button" id="btnPlay6" value=">>" onclick="forwardVideo()" />
-                        <input type="button" id="btnPlay1" value="Record" onclick="RecordVideo()" /> -->
-                    </div>
-                    <div class="right">
-                        <!--
-                          Right link contains only icon - additional "icon-only" class
-                          Additional "open-panel" class tells app to open panel when we click on this link
-                        -->
-                        <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
-                    </div>
-                </div>
-            </div>
-            <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
-            <div class="pages navbar-through toolbar-through">
-                <!-- Page, "data-page" contains page name -->
-                <div data-page="index" class="page">
-                    <!-- Scrollable page content -->
-                    <div class="page-content">
-                        <div class="content-block" style="height:85%; margin:0; padding: 0"> 
-                            
-                            <iframe id="jokoFrame" showinfo=0 rel=0 controls=0 type="text/html"
-                                style="overflow: hidden; height: 85%;   width: 100%; position: absolute;"
-                                src="https://www.youtube.com/embed/48lDzD6JNJc?enablejsapi=1" frameborder="0">
-                            </iframe>    
-                            <canvas id="myCanvas" style="height:85%" ondblclick="clearJoko()"></canvas>
-                      </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Bottom Toolbar-->
-            <!--<div class="toolbar">
-                <div class="toolbar-inner">
-                    <!-- Toolbar links -->
-                    <!--
-                    <a href="#" class="link">Link 1</a>
-                    <a href="#" class="link">Link 2</a>-->
-               <!-- </div>
-            </div>-->
-        </div>
-    </div>
-
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
-    <script type="text/javascript" src="js/my-app.js"></script>
-    <script type="text/JavaScript" src="js/raf.js"></script>
-    <script type="text/JavaScript" src="js/joko.js"></script>
+		  </div>
+      
+      <input type="text" style="display:inline-block; vertical-align:super;height:30px" 
+             id="input" placeholder="Type your message..." />
+      
+      <a id="button" href="#" style="display:inline-block;vertical-align:top;" >
+          <img src="media/play-button-1.png" style="width:30px; height:30px" alt="Play">
+      </a>
     
-</body>
+    </div>
+		
+    <div id="output"  style="background-color:white; height:400px;  " ></div>
+	
+    <div id="form" style="position:absolute; top:0; left:0; width:100%; min-height: 100%;;
+                          
+                          background-color:darkGrey; display:none;
+                          padding:5em;">
+        <a href="#" onclick="openForm()" >Close</a><br>
+    </div>
+  
+  </section>
+  
+	<footer></footer>
 
+
+	<script src="http://cdn.pubnub.com/pubnub.min.js"></script>
+  <script type="text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js?ver=1.4.2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/json2html/1.2.0/json2html.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.json2html/1.2.0/jquery.json2html.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/1.2.0/mustache.min.js"></script>
+  
+  <script src="js/pubnub.js"></script>
+  <script src="js/template.js"></script>
+
+  
+  <script>
+    
+    var formObj = []; //Deprecate
+    var request = JSON.parse('{"request":{"mode":"0","id":"0","userid":"","password":"","token":"","appid":"","templateid":"","filter":[],"data":[{"page":[],"type":"1"}]}}');
+    //console.log(request);
+    
+    //toggle between hiding and showing the dropdown content */
+    myFunction();
+    openLoginForm();
+    
+    function myFunction() {
+//       alert($("#myDropdown").css('display'))
+      if ( $("#myDropdown").css('display') == 'block')
+        $("#myDropdown").css('display','none');
+      else
+        $("#myDropdown").css('display','block');
+    }
+    
+    function readTextFile(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, true);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState === 4 && rawFile.status == "200") {
+                callback(rawFile.responseText);
+            }
+        }
+        rawFile.send(null);
+    }
+
+    function openLoginForm(j,k) {      
+      
+//       if (k == null) {} 
+//         else  console.log(k.getAttribute("data-k"));
+      
+      //Close function bar
+       $("#myDropdown").css('display','none');
+     
+      //open popup
+      if ( $("#form").css('display') == 'block') 
+      {
+        $("#form").css('display','none');
+      }
+      else
+        {
+          
+            var loginTemplate = { 
+            "template":
+                         [
+                          {"<>":"style","html":"\n  .entryBox {\n    rows:3;\n    width:100%;\n    height:60px;\n  }\n  \n  .entryBtn {\n    width:80px;\n    height:40px;\n    display:inline;\n  }\n  \n  #dForm {\n    z:index:100;\n  }\n"},
+                          {"<>":"form","id":"dForm","html":[
+                              {"<>":"input","id":"txtTitle","name":"txtTitle","type":"text","readonly":"1","value":"${txtTitle}", "style":"background-color:darkGrey" },
+                              {"<>":"input","id":"txtUserid","name":"txtUserid","type":"text","placeholder":"Enter email","value":""},
+                              {"<>":"input","id":"txtPassword","name":"txtPassword","type":"password","placeholder":"Enter password","value":""},                 
+                              {"<>":"br","html":""},
+                              {"<>":"button","type":"button","id":"btnSave","class":"entryBtn", "html":"Log In"},
+                              {"<>":"span","id":"spnEmpty", "html":" "},
+                              {"<>":"button","type":"button","id":"btnRegister","class":"entryBtn", "html":"SignUp"},
+                              //{"<>":"span","id":"spnEmpty", "html":" "},
+                              //{"<>":"button","type":"button","id":"btnClose","class":"entryBtn","html":"Cancel"},
+                              {"<>":"span","id":"spnEmpty", "html":" "},
+                              {"<>":"input","id":"txtStatus","name":"txtStatus","type":"text","readonly":"1","value":"", "style":"background-color:darkGrey;;border:none;width:100%" }
+                            ]}
+                         ],
+            "defaults": [
+                          {"txtTitle":"Log In", "txtLogin":"", "txtPassword":""}
+                        ]  
+
+          }
+            
+          $("#form").html(json2html.transform(loginTemplate.defaults,loginTemplate.template));
+                   
+          //Wire events
+          $("#btnSave").click(function() {  
+            
+            //Validate
+            if (    $("#txtUserid").val()==null ||
+                    $("#txtUserid").val() == "" ||
+                    $("#txtPassword").val() == null ||
+                    $("#txtPassword").val() == "" )
+            {
+                $("#txtStatus").val("Please enter UserID and Password");
+                return;
+            }
+            
+            //Call php service to save record
+            request.request.userid = $("#txtUserid").val();
+            request.request.password = $("#txtPassword").val();
+            request.request.mode = "0";
+            
+            $.ajax({
+                url: 'http://kavach.gearhostpreview.com/login.php',
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/x-www-form-urlencoded',
+                data:  { req:JSON.stringify(request) },
+                success: function( data, textStatus, jQxhr ){
+                    console.log( data);
+                    if (parseInt(data[0].id) > 0) {
+                      $("#mtMenu").show();
+                      $("#mtLogin").hide();
+                      //console.log(data[0].profile);
+                      buildIconBar("myDropdown",data[0].profile)
+                      displayStatus("Logged In");
+                      $("#form").css('display','none');          
+                    }
+                    else {
+                      $("#txtStatus").val("Wrong UserID or Password");
+                    }
+                },
+                error: function( jqXhr, textStatus, errorThrown ){
+                    console.log( errorThrown );
+                      $("#txtStatus").val("Error! Cannot Log in.");
+                }
+            });
+          }); 
+          
+          
+          //$("#btnClose").click(function() {  $("#form").css('display','none');  }); 
+          
+          //Wire events
+          $("#btnRegister").click(function() {  
+            
+            //Validate
+            if (    $("#txtUserid").val()==null ||
+                    $("#txtUserid").val() == "" ||
+                    $("#txtPassword").val() == null ||
+                    $("#txtPassword").val() == "" )
+            {
+                $("#txtStatus").val("Please enter UserID and Password");
+                return;
+            }
+           
+            //Call php service to save record
+            request.request.userid = $("#txtUserid").val();
+            request.request.password = $("#txtPassword").val();
+            request.request.mode = "1";
+            
+            $.ajax({
+                url: 'http://kavach.gearhostpreview.com/login.php',
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/x-www-form-urlencoded',
+                data:  { req:JSON.stringify(request) },
+                success: function( data, textStatus, jQxhr ){
+                    console.log( data);
+                    if (parseInt(data[0].id) > 0) {                    
+                      $("#txtStatus").val("Successfully Registered, please log in");
+                    }
+                    else {
+                        $("#txtStatus").val("Error Registering, User exists");
+                    }
+                },
+                error: function( jqXhr, textStatus, errorThrown ){
+                    console.log( errorThrown );
+                       $("#txtStatus").val("Error, Cannot Regster.");
+                }
+            });
+
+          }); 
+         
+          //Make form visible
+          $("#form").css('display','block');
+        
+        }
+    }
+    
+    function buildIconBar(div, data) {
+            
+          var profile = JSON.parse(data)
+          var html = "";
+          var json = "";
+          for (i = 0; i < profile.apps.length; i++) {
+               html=html+"<div id="+profile.apps[i].name+" style=\"background-color:red; color:white; padding:8px; border-style:solid; border-width:1px; border-color:white;\"  >"
+                        +"<label style=\"display:inline-block; width:80px; \">"
+                        +profile.apps[i].name+"</label>";
+                  for (j = 0; j < profile.apps[i].screens.length; j++) {
+                      json = "{\"appid\":\""+profile.apps[i].id+"\",\"templateid\":\""
+                              + profile.apps[i].screens[j].template+"\",\"mode\":\""
+                              +"0"
+                              //+"\",\"id\":\""+"2"
+                              +"\"}"
+                      //console.log(json);
+                      //html = html +"<a href='#' style='display:inline-block;vertical-align:sub;' onclick=openForm(this.dataset.j) "
+                      html = html +"<a href='#' style='display:inline-block;vertical-align:sub; padding-left:3px; ' "
+                                  +"onclick=displayForm(this.dataset.j) "
+                                  + "data-j="+ json.replace(/\"/g,'&quot;')  + " >"
+                                  +" <img src=media/"+ profile.apps[i].screens[j].image 
+                                  + " style='width:30px; height:30px' alt=Log>"
+                                  + "</a>";
+                  }
+              html = html +"</div>";
+          }
+
+          $("#"+div).html(html);
+
+    }
+        
+    function openForm(j,k,l) {      
+      
+//       if (k == null) {} 
+//         else  console.log(k.getAttribute("data-k"));
+      
+      //Close function bar
+       $("#myDropdown").css('display','none');
+     
+      //open popup
+      if ( $("#form").css('display') == 'block') 
+      {
+        $("#form").css('display','none');
+      }
+      else
+        {     
+          
+          //Load j into param object
+          //console.log(j);
+          if (j ==-1) {
+            
+                      
+                //Build Json2HTML from data and template & write it to form
+                var tt = [
+                      {"<>":"style","html":"\n  .entryBox {\n    rows:3;\n    width:100%;\n    height:60px;\n  }\n  \n  .entryBtn {\n    width:80px;\n    height:40px;\n    display:inline;\n  }\n  \n  #dForm {\n    z:index:100;\n  }\n"},
+                      {"<>":"form","id":"dForm","html":[
+                          {"<>":"input","id":"txtTitle","name":"txtTitle","type":"text","readonly":"1","value":"${txtTitle}"},
+                          {"<>":"input","id":"txtDate","name":"txtDate","type":"date","placeholder":"Enter Date","value":"${txtDate}"},
+                          {"<>":"textarea","id":"txtBreakfast", "name":"txtBreakfast","class":"entryBox","placeholder":"Enter what you ate for breakfast today","html":"${txtBreakfast}"},
+                          {"<>":"textarea","id":"txtLunch", "name":"txtLunch","class":"entryBox","placeholder":"Enter what you ate for lunch today","html":"${txtLunch}"},
+                          {"<>":"textarea","id":"txtSnacks", "name":"txtSnacks","class":"entryBox","placeholder":"Enter what you ate for snacks today","html":"${txtSnacks}"},
+                          {"<>":"textarea","id":"txtDinner", "name":"txtDinner","class":"entryBox","placeholder":"Enter what you ate for dinner today","html":"${txtDinner}"},
+                          {"<>":"input","id":"txtMovements", "name":"txtMovements","style":"display:inline-block; width:120px","type":"number","min":"0","max":"20","placeholder":"Bowel Movements","value":"${txtMovements}"},
+                          {"<>":"span","id":"spnEmpty", "html":" "},
+                          {"<>":"input","id":"txtSleep","name":"txtSleep","style":"display:inline-block; width:120px","type":"number","min":"0","max":"20","placeholder":"Sleep hrs","value":"${txtSleep}"},
+                          {"<>":"br","html":""},
+                          {"<>":"button","type":"button","id":"btnSave","class":"entryBtn", "html":"Save"},
+                          {"<>":"span","id":"spnEmpty", "html":" "},
+                          {"<>":"button","type":"button","id":"btnClose","class":"entryBtn","html":"Close"}
+                        ]}
+                     ]
+
+                //Transform
+                var d;
+                //console.log(j)
+
+                if (k==null) {
+                   d = [{'txtTitle':'Diet Entry', 'txtMovements':0} ] ;
+                }
+                else {
+                     d = JSON.parse(k.getAttribute("data-k"))
+                }
+
+                console.log(d);
+
+                $("#form").html(json2html.transform(d,tt));
+
+                //Wire events
+                $("#btnSave").click(function() {  
+
+                  publishForm( "Diet entry", formObj.length - 1, JSON.stringify(j2j($("#dForm").serializeArray())) );
+
+                  //Call php service to save record
+                  request.request.mode = "1";
+                  request.request.data[0].page = JSON.stringify(j2j($("#dForm").serializeArray()));
+
+                  $.ajax({
+                      url: 'http://kavach.gearhostpreview.com/trans.php',
+                      dataType: 'json',
+                      type: 'post',
+                      contentType: 'application/x-www-form-urlencoded',
+                      data:  { req:JSON.stringify(request) },
+                      success: function( data, textStatus, jQxhr ){
+                          console.log( data );
+                      },
+                      error: function( jqXhr, textStatus, errorThrown ){
+                          console.log( errorThrown );
+                      }
+                  });
+
+                  //e.preventDefault();
+                  $("#form").css('display','none');
+
+                }); 
+
+                $("#btnClose").click(function() {  $("#form").css('display','none');  }); 
+
+                //Make form visible
+                $("#form").css('display','block');
+
+            
+          }
+          else {
+            var param = JSON.parse(j);
+            //console.log(param);
+            request.request.appid = param.appid;
+            request.request.templateid = param.templateid;
+            console.log(request);
+            //Get template
+            $.ajax({
+                url: 'http://buzingle.web44.net/oktavity/service/template.php',
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/x-www-form-urlencoded',
+                data:  { req:JSON.stringify(request) },
+                success: function( data, textStatus, jQxhr ){
+                    //console.log( data );
+                    $("#form").html(json2html.transform(data.defaults,data.template));
+                  
+                    //Wire events
+                      $("#btnSave").click(function() {  
+
+                      publishForm( "Diet entry", formObj.length - 1, JSON.stringify(j2j($("#dForm").serializeArray())) );
+
+                      //Call php service to save record
+                      request.request.mode = "1";
+                      request.request.data[0].page = JSON.stringify(j2j($("#dForm").serializeArray()));
+
+                      $.ajax({
+                          url: 'http://kavach.gearhostpreview.com/trans.php',
+                          dataType: 'json',
+                          type: 'post',
+                          contentType: 'application/x-www-form-urlencoded',
+                          data:  { req:JSON.stringify(request) },
+                          success: function( data, textStatus, jQxhr ){
+                              console.log( data );
+                          },
+                          error: function( jqXhr, textStatus, errorThrown ){
+                              console.log( errorThrown );
+                          }
+                      });
+
+                      //e.preventDefault();
+                      $("#form").css('display','none');
+
+                    }); 
+
+                    $("#btnClose").click(function() {  $("#form").css('display','none');  }); 
+
+                    //Make form visible
+                    $("#form").css('display','block');
+
+                  
+                },
+                error: function( jqXhr, textStatus, errorThrown ){
+                    console.log( errorThrown );
+                }
+         });
+          }
+          
+        }
+      
+    }
+   
+    function toJSONString( form ) {
+		var obj = {};
+		var elements = form.querySelectorAll( "input, select, textarea" );
+		for( var i = 0; i < elements.length; ++i ) {
+			var element = elements[i];
+			var name = element.name;
+			var value = element.value;
+
+			if( name ) {
+				obj[ name ] = value;
+			}
+		}
+
+		return JSON.stringify( obj );
+	}
+    
+    function j2j (j) {
+
+    var result = {};
+    j.forEach(function(item) {
+        //console.log(item)
+        if (!result[item.name]) 
+          result[item.name] = item.value;
+        //else
+        //  result[item.name].push(item.value);
+    });
+    return result;
+
+  }
+    
+    (function ($) {
+    $.fn.serializeFormJSON = function () {
+
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+})(jQuery);
+
+
+  </script>
+  
+	
+  
+  
+</body>
 </html>
